@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('description')->nullable();
-            $table->enum('priority', ['low', 'medium', 'high']);
-            $table->timestamps();
+        Schema::table('user_tasks', function (Blueprint $table) {
+            $table->boolean('is_completed')->default(false);
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::table('user_tasks', function (Blueprint $table) {
+            //
+        });
     }
 };

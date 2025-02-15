@@ -44,17 +44,24 @@ Route::prefix('tasks')->middleware('auth:sanctum')->group(function () {
 
     Route::get('/', [TaskController::class, 'index']);
     Route::post('/', [TaskController::class, 'store']);
+
+
     Route::get('/orderedDesc', [TaskController::class, 'getTaskByPriorityDesc']);
     Route::get('/orderedAsc', [TaskController::class, 'getTaskByPriorityAsc']);
 
-Route::put('/{task_id}/favorite', [TaskController::class, 'addToFavorite']);
 
-Route::delete('/{task_id}/favorite', [TaskController::class, 'deleteFromFavorite']);
+    Route::put('/{task_id}/favorite', [TaskController::class, 'addToFavorite']);
 
-Route::get('/favorite', [TaskController::class, 'getAllFavorites']);
+    Route::delete('/{task_id}/favorite', [TaskController::class, 'deleteFromFavorite']);
+
+    Route::get('/favorite', [TaskController::class, 'getAllFavorites']);
 
 
-Route::get('/all', [TaskController::class, 'getAllTasks']);
-   
+    Route::get('/all', [TaskController::class, 'getAllTasks']);
 
+    Route::put('/{task_id}/completed', [TaskController::class, 'isCompleted']);
+
+    Route::put('/{task_id}/not-completed', [TaskController::class, 'isNotCompleted']);
+
+    Route::get('/completed', [TaskController::class, 'getAllTaskCompleted']);
 });

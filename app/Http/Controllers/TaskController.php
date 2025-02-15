@@ -14,6 +14,48 @@ class TaskController extends Controller
 
 {
 
+    public function isCompleted($task_id){
+        $task = Task::findOrFail($task_id);
+        $user = Auth::user(); // logged-in user
+
+        // Update the pivot table using updateExistingPivot
+        $user->tasks()->updateExistingPivot($task_id, [
+            'is_completed' => true
+        ]);
+
+        return response()->json([
+            'message' => 'Task completed successfully',
+            'data' => $task
+        ], 201);
+    }
+
+    public function isNotCompleted($task_id){
+        $task = Task::findOrFail($task_id);
+        $user = Auth::user(); // logged-in user
+
+        // Update the pivot table using updateExistingPivot
+        $user->tasks()->updateExistingPivot($task_id, [
+            'is_completed' => false
+        ]);
+
+        return response()->json([
+            'message' => 'Task not completed successfully',
+            'data' => $task
+        ], 201);
+    }
+
+    public function getAllTaskCompleted(){
+        $tasks = Task::whereHas('users', function ($query) {
+            $query->where('user_id', Auth::user()->id)
+                ->where('is_completed', true);
+        })->get();
+
+        return response()->json([
+            'message' => $tasks->isEmpty() ? 'لا توجد مهام حالياً' : 'تم جلب المهام بنجاح',
+            'data' => $tasks
+        ], 200);
+    }
+
 
    public function addToFavorite($task_id){
    

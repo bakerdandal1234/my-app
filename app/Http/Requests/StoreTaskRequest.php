@@ -24,7 +24,6 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255', 'not_regex:/^\d+$/'],
             'description' => ['nullable', 'string', 'max:255','not_regex:/^\d+$/'],
-            'is_completed' => ['required', 'boolean'],
             'priority' => ['required', 'string', 'in:low,medium,high'],
         ];
     }
