@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user_tasks', function (Blueprint $table) {
-            $table->boolean('is_favorite')->default(false);
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_tasks', function (Blueprint $table) {
-            $table->dropColumn('is_favorite');
-        });
+        Schema::dropIfExists('categories');
     }
 };

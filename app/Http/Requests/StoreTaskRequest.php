@@ -20,13 +20,16 @@ class StoreTaskRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'title' => ['required', 'string', 'max:255', 'not_regex:/^\d+$/'],
-            'description' => ['nullable', 'string', 'max:255','not_regex:/^\d+$/'],
-            'priority' => ['required', 'string', 'in:low,medium,high'],
-        ];
-    }
+{
+    return [
+        'title' => ['required', 'string', 'max:255', 'not_regex:/^\d+$/'],
+        'description' => ['nullable', 'string', 'max:255', 'not_regex:/^\d+$/'],
+        'priority' => ['required', 'string', 'in:low,medium,high'],
+
+
+    ];
+}
+
 
     /**
      * Get custom messages for validator errors.
@@ -48,6 +51,10 @@ class StoreTaskRequest extends FormRequest
             'is_completed.boolean' => 'the is_completed must be a boolean',
 
             'priority.in' => 'the priority must be low, medium, or high',
+            'priority.required' => 'the priority is required',
+            'priority.string' => 'the priority must be a string',
+
+
         ];
     }
 }

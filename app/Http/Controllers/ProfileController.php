@@ -48,10 +48,13 @@ class ProfileController extends Controller
 
      public function store(StoreProfileRequest $request)
      {
-         $user = Auth::user(); // الحصول على المستخدم الحالي
-     
-         // إنشاء البروفايل مع تمرير user_id يدويًا
-         $profile = Profile::create(array_merge($request->validated(), ['user_id' => $user->id]));
+         $userId = Auth::user()->id; // الحصول على المستخدم الحالي
+         $userValidated = $request->validated();
+         $userValidated['user_id'] = $userId;
+         if($request->hasFile('image')){
+             $userValidated['image'] = $request->file('image')->store('my-images', 'public');
+         }
+         $profile = Profile::create($userValidated);
      
          return response()->json(['message' => 'Profile created', 'data' => $profile], 201);
      }
@@ -62,8 +65,6 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         try {
-           
-    
             $user = Auth::user();
             $profile = $user->profile;
     
@@ -73,7 +74,8 @@ class ProfileController extends Controller
                     'message' => 'Profile not found'
                 ], 404);
             }
-    
+           
+             
             // Update profile with validated data
             $profile->update($request->validated());
     

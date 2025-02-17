@@ -26,6 +26,7 @@ class StoreProfileRequest extends FormRequest
             'address' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date', 'date_format:Y-m-d'],
             'bio' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048',],
         ];
     }
 
@@ -35,18 +36,28 @@ class StoreProfileRequest extends FormRequest
             'phone.required' => 'the phone is required',
             'phone.string' => 'the phone must be a string',
             'phone.max' => 'the phone must be less than 255 characters',
+
+
             'address.required' => 'the address is required',
             'address.string' => 'the address must be a string',
             'address.max' => 'the address must be less than 255 characters',
+
+
             'date_of_birth.required' => 'the date of birth is required',
             'date_of_birth.date' => 'the date of birth must be a date',
             'date_of_birth.date_format' => 'the date of birth must be in the format YYYY-MM-DD like: 2000-02-01',
+
+
             'bio.required' => 'the bio is required',
             'bio.string' => 'the bio must be a string',
             'bio.max' => 'the bio must be less than 255 characters',
+
+            'image.image' => 'the image must be an image',
+
             'user_id.required' => 'the user id is required',
             'user_id.exists' => 'the user id does not exist',
             'user_id.unique' => 'this user already has a profile'
+
         ];
     }
 }

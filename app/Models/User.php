@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Profile;
 use App\Models\Task;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -54,11 +54,15 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function tasks()
+   public function tasks(): HasMany
     {
-        return $this->belongsToMany(Task::class, 'user_tasks')->withPivot('is_favorite')
-            ->withTimestamps();
+        return $this->hasMany(Task::class);
     }
+
+
+
+
+    
 
     
 

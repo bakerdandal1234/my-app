@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->enum('priority', ['low', 'medium', 'high']);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ربط بـ users
             $table->timestamps();
         });
     }

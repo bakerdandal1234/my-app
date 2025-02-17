@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\CheckUserRole;
+use App\Models\Category;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -30,13 +32,18 @@ Route::prefix('profile')->middleware('auth:sanctum')->group(function () {
 });
 
 
-
-
-
+Route::get('categories',[CategoryController::class,'index']);
+Route::post('categories',[CategoryController::class,'store']);
+Route::post('tasks/{task_id}/categories',[CategoryController::class,'AddCategoryToTask']);
+Route::get('tasks/{task_id}/categories',[CategoryController::class,'getCategoriesByTask']);
+Route::get('categories/{category_id}/tasks',[CategoryController::class,'getTasksByCategory']);
+Route::get('categories/{id}',[CategoryController::class,'show']);
+Route::put('categories/{id}',[CategoryController::class,'update']);
+Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 Route::prefix('tasks')->middleware('auth:sanctum')->group(function () {
     Route::put('/{task_id}', [TaskController::class, 'update']);
-    Route::delete('/', [TaskController::class, 'destroy']);
+    Route::delete('/{task_id}', [TaskController::class, 'destroy']);
 
     // قيد على task_id لقبول أرقام فقط
     Route::get('/{task_id}', [TaskController::class, 'show'])
@@ -57,7 +64,7 @@ Route::prefix('tasks')->middleware('auth:sanctum')->group(function () {
     Route::get('/favorite', [TaskController::class, 'getAllFavorites']);
 
 
-    Route::get('/all', [TaskController::class, 'getAllTasks']);
+    Route::get('/all', [TaskController::class, 'getAllTasks'])->middleware(CheckUserRole::class);
 
     Route::put('/{task_id}/completed', [TaskController::class, 'isCompleted']);
 

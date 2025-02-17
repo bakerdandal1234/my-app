@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('address');
             $table->date('date_of_birth');
             $table->text('bio');
+            $table->string('image')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

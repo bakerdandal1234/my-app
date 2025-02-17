@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user_tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->boolean('is_completed')->default(false);
+            $table->boolean('is_favorite')->default(false);
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             //
         });
     }
